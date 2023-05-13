@@ -1,14 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import Home from './pages/home'
 import Dashboard from './pages/dashboard';
-import DashboardUser from './pages/dashboardUser';
-import DashboardAdmin from './pages/dashboardAdmin';
-import ControlledTabsInv from './components/inv';
-import Users from './components/users';
-import AdminInventory from './pages/admin_inv';
-import AdminUsers from './pages/admin_user'
 import ItemDetail from './components/itemDetail';
 
 function App() {

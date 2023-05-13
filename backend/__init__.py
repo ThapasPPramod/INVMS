@@ -78,7 +78,7 @@ def create_app():
 
                 result = []
                 for row in rows:
-                    print("row:", row, type(row))
+                    # print("row:", row, type(row))
                     item = Item(*row)
                     result.append(item.__dict__)
                 cursor.close()
@@ -98,14 +98,14 @@ def create_app():
         try:
             conn = db.get_db()
             if conn:
-                print("hello 1")
+                # print("hello 1")
                 cursor = conn.cursor()
                 cursor.execute(sql_code, (item_id))
                 row = cursor.fetchone()
-                print("row:", row, type(row))
+                # print("row:", row, type(row))
                 item = Item(*row)
                 result = item.__dict__
-                print("hi", result)
+                # print("hi", result)
                 cursor.close()
                 db.close_db
             response = jsonify(result)
