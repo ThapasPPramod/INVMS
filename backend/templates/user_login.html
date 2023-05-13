@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>SAC Election Software</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <style>
+        body {
+            background: #76b852;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #76b852, #8DC26F);
+  background: -moz-linear-gradient(to top, #76b852, #8DC26F);
+  background: -o-linear-gradient(to top, #76b852, #8DC26F);
+  background: linear-gradient(to top, #76b852, #8DC26F);
+  background-size: cover;
+  background-attachment: fixed;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  /* background: ghostwhi; */
+        }
+        .center {
+         position: fixed; 
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+        }
+        h1 {
+  font-size: 3em;
+  text-align: center;
+  color: #fff;
+  font-weight: 100;
+  text-transform: capitalize;
+  letter-spacing: 4px;
+  font-family: 'Roboto', sans-serif;
+}
+img {
+    width: 40%;
+}
+h3 {
+    color: whitesmoke;
+}
+    </style>
+</head>
+
+<body>
+    <div class="center">
+    <img src="https://upload.wikimedia.org/wikipedia/en/d/d0/National_Institute_of_Technology%2C_Calicut_Logo.png" alt="">
+    <h3>LOGIN AS USER</h3><br>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload" data-client_id="912567644891-rt71b8gghmpktppi2cf16nj89p1d3btk.apps.googleusercontent.com"
+        data-context="signin" data-ux_mode="popup" data-login_uri="http://localhost:5000/auth/login/callback?user-class=user&next={{next}}" data-nonce=""
+        data-auto_prompt="false">
+    </div>
+
+    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-text="signin_with"
+        data-size="large" data-logo_alignment="left" data-width="400">
+    </div>
+</div>
+</body>
+
+</html>

@@ -3,12 +3,11 @@ from flask_login import UserMixin
 
 
 class User(UserMixin):
-    def __init__(self, id, mail, name, admin, admin_id):
+    def __init__(self, id, mail, name, admin, ):
         self.id = id
         self.mail = mail
         self.name = name
         self.admin = admin
-        self.admin_id = admin_id
 
     def get_id(self):
         return self.id
@@ -26,7 +25,7 @@ class User(UserMixin):
         if not user:
             return None
         user = User(id=user[0], mail=user[1], name=user[2],
-                    admin=user[3], admin_id=user[4])
+                    admin=user[3])
         return user
 
     @staticmethod
@@ -34,7 +33,7 @@ class User(UserMixin):
         from .db import get_db
         conn = get_db()
         cursor = conn.cursor()
-        cursor.execute("SELECT id, admin_ FROM user WHERE email=%s", (mail,))
+        cursor.execute("SELECT id, admin_ FROM users WHERE email=%s", (mail,))
         user = cursor.fetchone()
         if user == None:
             cursor.execute(
@@ -53,6 +52,6 @@ class User(UserMixin):
         from .db import get_db
         conn = get_db()
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO admins(id) VALUES(%d)", (id,))
+        cursor.execute("UPDATE users SET admin_=true WHERE id = %s", (id,))
         cursor.close()
         g.db.commit()

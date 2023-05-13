@@ -1,28 +1,11 @@
-import React, { Component, useEffect, useRef } from 'react';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import QRCode from 'qrcode.react';
+import QRCode from 'react-qr-code';
 
 function MyVerticallyCenteredModal(props) {
-  // console.log(props)
-  const image_title = props.item.name_+'.png'
+  console.log(props)
 
-  const itemUrl  = 'http://localhost:3000/dashboard/scan/'+ props.item.id;
-
-  // useEffect(() => {
-  //   window.location.href = itemUrl;
-  // }, [itemUrl]);
-
-  const qrCodeRef = useRef();
-
-  const handleDownloadClick = () => {
-    const canvas = qrCodeRef.current.querySelector('canvas');
-    const dataUrl = canvas.toDataURL('image/png');
-    const link = document.createElement('a');
-    link.download = image_title;
-    link.href = dataUrl;
-    link.click();
-  };
 
   return (
     <Modal
@@ -43,12 +26,8 @@ function MyVerticallyCenteredModal(props) {
         </p>
       </Modal.Body>
       <Modal.Footer>
-        <div ref={qrCodeRef}>
-        <QRCode value={itemUrl}/>
-        <button onClick={handleDownloadClick}>Download QR Code</button>
-        </div>
-        {/* console.log(itemUrl); */}
-        {/* <Button onClick={props.onHide}>Close</Button> */}
+        <QRCode value={<ItemDetail item={props.item}/>}/>
+        <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
   );

@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 
 
 import {Stack} from 'react-bootstrap';
+import Dashboard from './dashboard';
 import ControlledTabsInv from '../components/inv';
 import NavigationBarScan from '../components/navbarScan';
 

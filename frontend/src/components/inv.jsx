@@ -1,72 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Container, Tab, Tabs, Table, Button, Form} from 'react-bootstrap'
+import axios from 'axios';
 // import InventoryView from './inventory';
 
 
 import Item from './item';
 
+const baseUrl = "htttp://localhost:5000"
+
 function AddItem() {
+  const [formData, setFormData] = useState({name_:"",date_of_purchase:"",bill_number:"",supplier_address:"",quantity:"",rate:"",amount:"",colour:"",warranty_period:"",remarks:"",admin_id:"0",
+  });
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const jsonData = JSON.stringify(formData);
+    console.log(jsonData)
+    axios
+      .post("http://localhost:5000/item/add",formData, config)
+      .then((response) => {
+        console.log(response);
+        alert("Form submitted successfully!");
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("An error occurred while submitting the form.");
+      });
 
-  const [name, setName] = useState('');
-  const [date_of_purchase, setDop] = useState('');
-  const [bill_number, setBn] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [rate, setRate] = useState('');
-  const [amount, setAmount] = useState('');
-  const [color, setColor] = useState('');
-  const [warranty_period, setWp] = useState('');
-  const [supplier_address, setSa] = useState('');
-  const [remarks, setRemarks] = useState('');
-
-  function handleSubmit(event){
-    event.preventDefault(); 
-
-
-      alert(name + ' was added!');
+      // alert(formData.name_ + ' was added!');
   }
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+     console.log(event, event.target);
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+      
+    }));
+   console.log(formData);
+  };
+
   
     return (
-      <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicName">
-          <Form.Label>Name</Form.Label>
-          <Form.Control type="text" placeholder="Enter item name" onChange={(e) => (setName(e.target.value))} />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicDate">
-          <Form.Label>Purchase Date</Form.Label>
-          <Form.Control type="date" placeholder="dd-mm-yyyy" onChange={(e) => (setDop(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="bn">
-          <Form.Label>Bill Number</Form.Label>
-          <Form.Control type="text" placeholder="Enter bill number" onChange={(e) => (setBn(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="sa">
-          <Form.Label>Supplier Address</Form.Label>
-          <Form.Control type="text" placeholder="Enter supplier address" onChange={(e) => (setSa(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="q">
-          <Form.Label>Quantity</Form.Label>
-          <Form.Control type="text" placeholder="Enter quantity purchased" onChange={(e) => (setQuantity(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="rate">
-          <Form.Label>Rate</Form.Label>
-          <Form.Control type="text" placeholder="Enter rate(in Rs. /unit)" onChange={(e) => (setRate(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="amount">
-          <Form.Label>Amount</Form.Label>
-          <Form.Control type="text" placeholder="Enter bill amount(in Rs.)" onChange={(e) => (setAmount(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="color">
-          <Form.Label>Color</Form.Label>
-          <Form.Control type="text" placeholder="Enter color" onChange={(e) => (setColor(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="wp">
-          <Form.Label>Warranty Period</Form.Label>
-          <Form.Control type="text" placeholder="Enter warranty period (if any)" onChange={(e) => (setWp(e.target.value))}/>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="remarks">
-              <Form.Label>Remarks</Form.Label>
-              <Form.Control type="text" placeholder="Enter remarks (if any)" onChange={(e) => (setRemarks(e.target.value))}/>
-        </Form.Group>
+      <Form style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }} onSubmit={handleSubmit}>
+        <label>Name :
+          <input  type="text" name="name_" placeholder="Enter item name" onChange={handleChange} />
+        </label><br/>
+          <label>Purchase Date  :
+          <input type="date" name="date_of_purchase" placeholder="dd-mm-yyyy" value={formData.date_of_purchase} onChange={handleChange} />
+          </label><br/>
+       <label>Bill Number :
+          <input type="text" name="bill_number" placeholder="Enter bill number" value={formData.bill_number} onChange={handleChange} />
+          </label><br/>
+       <label>Supplier Address  : 
+          <input type="text" name="supplier_address" placeholder="Enter supplier address" value={formData.supplier_address} onChange={handleChange} />
+          </label><br/>
+          <label>Quantity :
+          <input type="text" name="quantity" placeholder="Enter quantity purchased" value={formData.quantity} onChange={handleChange} />
+          </label><br/>
+          <label>Rate :
+          <input type="text" name="rate" placeholder="Enter rate(in Rs. /unit)" value={formData.rate} onChange={handleChange} />
+          </label><br/>
+          <label>Amount :
+          <input type="text" name="amount" placeholder="Enter bill amount(in Rs.)" value={formData.amount} onChange={handleChange} />
+          </label><br/>
+          <label>Color  :
+          <input type="text" name="colour" placeholder="Enter color" value={formData.colour} onChange={handleChange} />
+          </label><br/>
+          <label>Warranty Period  :
+          <input type="text" name="warranty_period" placeholder="Enter warranty period (if any)" value={formData.warranty_period} onChange={handleChange} />
+          </label><br/>
+          <label>Remarks  :
+          <input type="text" name="remarks" placeholder="Enter remarks (if any)" value={formData.remarks} onChange={handleChange} />
+          </label><br/>
         <Button variant="primary" type="submit">
           Submit and generate QR code
         </Button>
@@ -76,10 +89,29 @@ function AddItem() {
 
 export default function ControlledTabsInv() {
   var [key, setKey] = useState('view');
-  var [items, setItems] = useState([{sl:1, name:'Ceiling fan', purchase_date:'02-10-2016', rate:'2000',remarks:'Good'}, 
-  {sl:2, name:'Tubelight', purchase_date:'04-10-2016', rate:'600',remarks:''},
-  {sl:3, name:'Laptop', purchase_date:'02-11-2016', rate:'20000',warranty_period:'1 year'},
-  {sl:4, name:'xyz', purchase_date:'02-11-2026', rate:'25000',remarks:''},]);
+  // var [data,setData] = useState([]);
+  var [items, setItems] = useState([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/item/getAll');
+        setItems(response.data);
+        console.log(items[0]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (key === 'view') {
+      fetchData();
+    }
+  }, [key]);
+
+if(!items){
+  return <div>Loading...</div>;
+}
+
   return (
     <Container>
         <p><h3><center>INVENTORY</center></h3></p>
@@ -89,7 +121,7 @@ export default function ControlledTabsInv() {
         onSelect={(k) => setKey(k)}
         className="mb-3"
         >
-        <Tab eventKey="view" title="View">
+        <Tab eventKey="view" title="View" >
           
         <Container fluid >
       <Table striped expand='lg' variant='dark'>
@@ -97,20 +129,20 @@ export default function ControlledTabsInv() {
           <tr>
             <th>#</th>
             <th>Item Name</th>
-            <th>Qrcode</th>
+            {/* <th>Qrcode</th> */}
           </tr>
         </thead>
 
-        <tbody>
+         <tbody>
         {items.map( (item) => (
           <>
           <tr>
-            <td>{item.sl}</td><td>{<Item item={item} />}</td><td><Button variant='outline-info'>Generate Qr Code</Button></td>
+            <td>{item.id}</td><td>{<Item item={item} />}</td>
           </tr>
           </>
         ))}
 
-        </tbody>
+        </tbody> 
       </Table>
     </Container>
         </Tab>

@@ -1,5 +1,4 @@
-drop table if exists users;
-drop table if exists admins;
+drop table if exists users;  
 drop table if exists item;
 
 
@@ -7,15 +6,11 @@ create table users(
     id serial primary key,
     email text unique not null,
     name_ text not null,
-    admin_ boolean default false,
-    admin_id integer not null REFERENCES admins (id)
+    admin_ boolean default false
 
 );
 
-create table admins(
-    id integer not null references users (id)
-    
-);
+
 
 create table item(
     id serial primary key,
@@ -29,5 +24,5 @@ create table item(
     colour text,
     warranty_period text,
     remarks text,
-    admin_id integer not null REFERENCES admins (id)
+    admin_id integer
 );

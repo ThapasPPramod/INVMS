@@ -8,7 +8,10 @@ from flask.cli import with_appcontext
 def get_db():
     if 'db' not in g:
         dbname = current_app.config['DATABASE_NAME']
+    try:
         g.db = psycopg2.connect(dbname=dbname)
+    except Exception as e:
+        print("hello"+e)
     return g.db
 
 
@@ -27,11 +30,10 @@ def init_db():
     cursor.execute(sql_code)
     from .user import User
     user = User(id=0, mail="thapas_b190478cs@nitc.ac.in",
-                name="Thapas P Pramod", admin=True, admin_id=0)
+                name="Thapas P Pramod", admin=True)
 
-    cursor.execute("insert into users (email, name, admin_, admin_id) values (%s,%s,%s,%d)",
-                   (user.id, user.mail, user.name, user.admin_id))
-    cursor.execute("insert into admins (id) values (%d) ", (user.id,))
+    cursor.execute("insert into users (email, name_, admin_) values (%s,%s,%s)",
+                   (user.mail, user.name, user.admin))
     cursor.close()
     db.commit()
     close_db()
