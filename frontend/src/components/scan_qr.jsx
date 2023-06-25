@@ -45,7 +45,10 @@ function QrScanner(){
 
   // };
   return(
+    <>
+    
     <Button variant='primary' href='./scan/:item_id' >Scan</Button>
+    </>
   );
 }
 export default QrScanner;

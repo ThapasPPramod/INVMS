@@ -6,8 +6,9 @@ import { useState } from 'react';
 import NavigationBar from '../components/navigationBar';
 
 function Dashboard(props){
-    var user_class = props.user_class
-
+    var user_class = props.user_class;
+    var user_name = props.user_name;
+    console.log(user_name)
 
     return (
 <div>
